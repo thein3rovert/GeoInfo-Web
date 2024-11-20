@@ -12,7 +12,7 @@ function App() {
     <div>
       <h2>Welcome to development</h2>
     </div>
-    <div classname= "App">
+    <div className= "App">
       <CityPopulation/>
     </div>
     </>
