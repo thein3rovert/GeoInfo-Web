@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Header from './components/Header'; // Adjust the path as necessary
-import HomePage from './components/HomePage'; // Adjust the path as necessary
-// import GeoInfo from './GeoInfo'; // Assume you have a GeoInfo component
-// import LineChart from './LineChart'; // Assume you have a LineChart component
-// import BarChart from './BarChart'; // Assume you have a BarChart component
+import Header from './components/Header'; 
+import HomePage from './components/HomePage'; 
+import CityPopulation from './components/CityPopulation';
+
+// import GeoInfo from './GeoInfo'; 
+// import BarChart from './BarChart'; 
 
 const App = () => {
   return (
@@ -12,8 +13,9 @@ const App = () => {
       <Header />
       <Switch>
         <Route path="/" exact component={HomePage} />
+        <Route path="/line-chart" component={CityPopulation} />
         {/* <Route path="/geoinfo" component={GeoInfo} />
-        <Route path="/line-chart" component={LineChart} />
+        
         <Route path="/bar-chart" component={BarChart} /> */}
       </Switch>
     </Router>

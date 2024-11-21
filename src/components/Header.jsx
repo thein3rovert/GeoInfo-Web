@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Header.css'; // Import the CSS file for styling
-
+import './Header.css';
 const Header = () => {
   return (
     <header className="header">
@@ -9,7 +8,6 @@ const Header = () => {
       <nav className="nav">
         <ul>
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/geoinfo">GeoInfo</Link></li>
           <li><Link to="/line-chart">Line Chart</Link></li>
           <li><Link to="/bar-chart">Bar Chart</Link></li>
         </ul>

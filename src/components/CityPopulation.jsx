@@ -37,27 +37,16 @@ const CityPopulation = () => {
     const limitedCities = cities.slice(0, 10);
 
     return (
-
         <div>
-
             <h1>City Populations</h1>
-
             <ul>
-
                 {limitedCities.map((city, index) => (
-
                     <li key={index}> {/* Use index as key if no unique ID is available */}
-
                         {city.city}: {city.populationCounts.length > 0 ? city.populationCounts[0].value : 'No data available'}
-
                     </li>
-
                 ))}
-
             </ul>
-
         </div>
-
     );
 }
 export default CityPopulation;
