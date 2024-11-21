@@ -66,3 +66,24 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+ul {
+
+  list-style-type: none; /* Removes bullet points */
+
+  padding: 0; /* Removes default padding */
+
+}
+
+
+li {
+
+  margin: 5px 0; /* Adds some space between items */
+
+  white-space: normal; /* Allows text to wrap */
+
+  overflow: visible; /* Ensures overflow is visible */
+
+  text-overflow: clip; /* Prevents ellipsis */
+
+}

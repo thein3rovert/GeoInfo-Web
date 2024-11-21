@@ -1,22 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import CityPopulation from './components/CityPopulation'
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Header from './components/Header'; // Adjust the path as necessary
+import HomePage from './components/HomePage'; // Adjust the path as necessary
+// import GeoInfo from './GeoInfo'; // Assume you have a GeoInfo component
+// import LineChart from './LineChart'; // Assume you have a LineChart component
+// import BarChart from './BarChart'; // Assume you have a BarChart component
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-    <div>
-      <h2>Welcome to development</h2>
-    </div>
-    <div className= "App">
-      <CityPopulation/>
-    </div>
-    </>
-  )
-}
+    <Router>
+      <Header />
+      <Switch>
+        <Route path="/" exact component={HomePage} />
+        {/* <Route path="/geoinfo" component={GeoInfo} />
+        <Route path="/line-chart" component={LineChart} />
+        <Route path="/bar-chart" component={BarChart} /> */}
+      </Switch>
+    </Router>
+  );
+};
 
-export default App
+export default App;
