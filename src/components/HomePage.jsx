@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import '../styles/HomePage.css'
+import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedChart, setSelectedChart] = useState('');
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -42,9 +47,20 @@ const HomePage = () => {
 
   const handleSearch = (event) => {
     event.preventDefault();
+    setIsModalOpen(true); // Open the modal on form submission
     console.log("Searching for:", searchTerm);
   };
 
+  const handleChartSelect = (chartType) => {
+    // setSelectedChart(chartType);
+    setIsModalOpen(false); 
+    if(chartType === 'Line Chart') {
+      navigate('/line-chart'); 
+    } else if (chartType === 'Bar Chart'){
+      navigate('/bar-chart')
+    }
+    console.log("Selected chart type:", chartType);
+  };
 
   return (
     <div>
@@ -82,6 +98,19 @@ const HomePage = () => {
           </ul>
         )}
       </div>
+      <Modal
+
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        contentLabel="Select Chart Type"
+        appElement={document.getElementById('root')} // Pass the root element directly
+      >
+
+        <h2>Select Chart Type</h2>
+        <button onClick={() => handleChartSelect('Bar Chart')}>View Country and Capital</button>
+        <button onClick={() => handleChartSelect('Line Chart')}>View Country and Population</button>
+        <button onClick={() => setIsModalOpen(false)}>Close</button>
+      </Modal>
 
       <section className="features">
         <h2>Features</h2>
