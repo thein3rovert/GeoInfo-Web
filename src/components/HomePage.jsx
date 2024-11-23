@@ -9,8 +9,8 @@ const HomePage = () => {
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedChart, setSelectedChart] = useState('');
   const navigate = useNavigate(); 
+  const [selectedCountry, setSelectedCountry] = useState(''); 
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -43,6 +43,7 @@ const HomePage = () => {
   const handleCountrySelection = (selectedCountryName) => {
     setSearchTerm(selectedCountryName);
     setFilteredCountries([]);
+    setSelectedCountry(selectedCountryName);  //Just to store the selected country in a state
   };
 
   const handleSearch = (event) => {
@@ -56,6 +57,7 @@ const HomePage = () => {
     setIsModalOpen(false); 
     if(chartType === 'Line Chart') {
       navigate('/line-chart'); 
+      navigate(`/bar-chart?country=${encodeURIComponent(selectedCountry)}`); 
     } else if (chartType === 'Bar Chart'){
       navigate('/bar-chart')
     }
