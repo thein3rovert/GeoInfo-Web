@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import countryService from '../services/countryAPI'; // Adjust the path as necessary
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import '../styles/PopulationTrend.css'; // Import CSS file for styling
 
-const PopulationTrend = () => {
+const BarChart = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedCity, setSelectedCity] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("http://localhost:8080/api/countries/population/cities"); // Replace with your API endpoint
-                setData(response.data.data);
-            } catch (err) {
-                setError("Error fetching population data");
-            } finally {
-                setLoading(false);
-            }
-        };
 
+        const fetchData = async () => {
+            const result = await countryService.fetchPopulationData(); // Use the new API service method
+            if (result.success) {
+                setData(result.data);
+            } else {
+                setError (result.error);
+            }
+            setLoading(false);
+        };
         fetchData();
     }, []);
 
@@ -44,6 +43,7 @@ const PopulationTrend = () => {
         : [];
 
     return (
+        <div className="main-container">
         <div className="container">
             <h1 className="title">Population Trend</h1>
             <div className="dropdown-container">
@@ -81,7 +81,8 @@ const PopulationTrend = () => {
                 <div className="no-data">No data available for the selected city.</div>
             )}
         </div>
+        </div>
     );
 };
 
-export default PopulationTrend;
+export default BarChart;

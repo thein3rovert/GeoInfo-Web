@@ -40,34 +40,40 @@ const countryService = {
       };
     }
   },
+  // New method to fetch population data
+  async fetchPopulationData() {
+    try {
+      const response = await apiClient.get('/countries/population/cities'); // Adjust the endpoint as necessary
+      if (response.error === "false") {
+        return { success: true, data: response.data };
+      } else {
+        return { success: false, error: response.msg };
+      }
+    } catch (error) {
+      return { 
+        success: false, 
+        error: error.message || "Failed to fetch population data"
+      };
+    }
+  },
 
-  // Example of how to add more API methods
-  // async getCountryDetails(countryId) {
-  //   try {
-  //     const response = await apiClient.get(`/countries/${countryId}`);
-  //     return { success: true, data: response.data };
-  //   } catch (error) {
-  //     return { 
-  //       success: false, 
-  //       error: error.message || "Failed to fetch country details"
-  //     };
-  //   }
-  // },
-
-  // async searchCountries(searchTerm) {
-  //   try {
-  //     const response = await apiClient.get('/countries/search', {
-  //       params: { q: searchTerm }
-  //     });
-  //     return { success: true, data: response.data };
-  //   } catch (error) {
-  //     return { 
-  //       success: false, 
-  //       error: error.message || "Failed to search countries"
-  //     };
-  //   }
-  // }
+  async fetchPopulationDataByCountry(countryName) {
+    try {
+      const response = await apiClient.get('/countries/population/cities');
+      if (response.error === false) {
+        // Filter the data for the selected country
+        const filteredData = response.data.filter(city => city.country === countryName);
+        return { success: true, data: filteredData };
+      } else {
+        return { success: false, error: response.msg };
+      }
+    } catch (error) {
+      return { success: false, error: error.message || "Failed to fetch population data" };
+    }
+  }
 };
+
+
 
 // Change to default export
 export default countryService;
