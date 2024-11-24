@@ -1,74 +1,50 @@
-import React, { useState, useEffect } from "react";
-import '../styles/HomePage.css'
-import Modal from 'react-modal';
+// src/components/HomePage.jsx
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
+import useCountries from '../hooks/useCountries'; // Ensure this is a default import
+
+import '../styles/HomePage.css';
 
 const HomePage = () => {
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [countries, setCountries] = useState([]);
-  const [filteredCountries, setFilteredCountries] = useState([]);
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate(); 
-  const [selectedCountry, setSelectedCountry] = useState(''); 
+  const [searchBarEntry, setSearchBarEntry] = useState('');
 
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/api/countries/flag");
-        const data = await response.json();
-        if (data.error === "false") {
-          setCountries(data.data);
-        } else {
-          console.error("Error fetching countries:", data.msg);
-        }
-      } catch (error) {
-        console.error("Error, unable to fetch countries data:", error);
-      }
-    };
-    fetchCountries();
-  }, []);
-
-
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setSearchTerm(value);
-
-    const filtered = countries.filter(country =>
-      country.name.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredCountries(filtered);
-  };
-
-  const handleCountrySelection = (selectedCountryName) => {
-    setSearchTerm(selectedCountryName);
-    setFilteredCountries([]);
-    setSelectedCountry(selectedCountryName);  //Just to store the selected country in a state
-  };
+  const {
+    filteredCountries,
+    selectedCountry,
+    isLoading,
+    error,
+    filterCountries,
+    selectCountry
+  } = useCountries();
 
   const handleSearch = (event) => {
     event.preventDefault();
-    setIsModalOpen(true); // Open the modal on form submission
-    console.log("Searching for:", searchTerm);
+    if (selectedCountry) {
+      setIsModalOpen(true);
+    }
   };
 
   const handleChartSelect = (chartType) => {
-    // setSelectedChart(chartType);
-    setIsModalOpen(false); 
-    if(chartType === 'Line Chart') {
-      navigate('/line-chart'); 
-      navigate(`/bar-chart?country=${encodeURIComponent(selectedCountry)}`); 
-    } else if (chartType === 'Bar Chart'){
-      navigate('/bar-chart')
+    setIsModalOpen(false);
+    if (chartType === 'Line Chart') {
+      navigate(`/bar-chart?country=${encodeURIComponent(selectedCountry)}`);
+    } else if (chartType === 'Bar Chart') {
+      navigate('/line-chart');
     }
-    console.log("Selected chart type:", chartType);
   };
 
+  if (isLoading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
+
   return (
-    <div>
+    <div className="home-page">
+      {/* Hero Section */}
       <div className="hero">
         <h1>Welcome to GeoInfo</h1>
-        <p>A React application for exploring geographic information</p>
+        <p>A simple application for exploring geographic information</p>
         <button className="btn">Learn More</button>
       </div>
 
@@ -78,21 +54,29 @@ const HomePage = () => {
           <input
             type="text"
             placeholder="Search for country..."
-            value={searchTerm}
-            onChange={handleInputChange}
+            value={searchBarEntry}
+            onChange={(e) => {
+              setSearchBarEntry(e.target.value);
+              filterCountries(e.target.value); // Call filterCountries directly
+            }}
           />
-
           <button type="submit">Search</button>
         </form>
-        {searchTerm && (
+        
+        {searchBarEntry && (
           <ul className="dropdown-list">
             {filteredCountries.map(country => (
-              <li key={country.iso3}
-                onClick={() => handleCountrySelection(country.name)}>
+              <li 
+                key={country.iso3}
+                onClick={() => {
+                  selectCountry(country.name);
+                  setSearchBarEntry(country.name); // Set the input to the selected country
+                }}
+              >
                 <img
                   src={country.flag}
                   alt={country.name}
-                  style={{ width: '20px', marginRight: '10px' }}
+                  className="country-flag"
                 />
                 {country.name}
               </li>
@@ -100,32 +84,46 @@ const HomePage = () => {
           </ul>
         )}
       </div>
-      <Modal
 
+      {/* Chart Modal */}
+      <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
         contentLabel="Select Chart Type"
-        appElement={document.getElementById('root')} // Pass the root element directly
+        className="chart-modal"
+        appElement={document.getElementById('root')}
       >
-
         <h2>Select Chart Type</h2>
-        <button onClick={() => handleChartSelect('Bar Chart')}>View Country and Capital</button>
-        <button onClick={() => handleChartSelect('Line Chart')}>View Country and Population</button>
-        <button onClick={() => setIsModalOpen(false)}>Close</button>
+        <div className="chart-options">
+          <button onClick={() => handleChartSelect('Bar Chart')}>
+            View Country and Capital
+          </button>
+          <button onClick={() => handleChartSelect('Line Chart')}>
+            View Country and Population
+          </button>
+          <button onClick={() => setIsModalOpen(false)} className="close-button">
+            Close
+          </button>
+        </div>
       </Modal>
 
+      {/* Features Section */}
       <section className="features">
         <h2>Features</h2>
         <ul>
-          <li>View geographic information on a map</li>
-          <li>Utilize line charts and bar charts for clear and insightful data representation.</li>
-          <li>Learn about different geographic locations, including population statistics and key information.</li>
+          <li>
+            <p>View geographic information on a map</p>
+          </li>
+          <li>
+            <p>Utilize line charts and bar charts for clear and insightful data representation.</p>
+          </li>
+          <li>
+            <p>Learn about different geographic locations, including population statistics and key information.</p>
+          </li>
         </ul>
       </section>
     </div>
   );
-}
+};
 
 export default HomePage;
-
-// Todo: Review and commit the citypopulation and the simpleLineChart
