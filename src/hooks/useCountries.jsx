@@ -1,5 +1,3 @@
-// src/hooks/useCountries.js
-
 import { useState, useEffect } from 'react';
 import countryService from '../services/countryAPI';
 
@@ -11,7 +9,6 @@ const useCountries = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch countries data
   useEffect(() => {
     const fetchCountriesData = async () => {
       setIsLoading(true);
@@ -24,10 +21,8 @@ const useCountries = () => {
       } else {
         setError(result.error);
       }
-      
       setIsLoading(false);
     };
-
     fetchCountriesData();
   }, []);
 

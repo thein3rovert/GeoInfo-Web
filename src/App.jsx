@@ -1,24 +1,26 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header'; 
 import HomePage from './components/HomePage'; 
-import CityPopulation from './components/CityPopulation';
+import BarChart from './charts/BarChart';
+import CountrySearch from './charts/CountrySearch';
 
-// import GeoInfo from './GeoInfo'; 
-// import BarChart from './BarChart'; 
+
 
 const App = () => {
   return (
     <Router>
       <Header />
-      <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/line-chart" component={CityPopulation} />
-        {/* <Route path="/geoinfo" component={GeoInfo} />
-        
-        <Route path="/bar-chart" component={BarChart} /> */}
-      </Switch>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/line-chart" element={<BarChart />} />
+        <Route path="/bar-chart" element={<CountrySearch />} />
+      
+      </Routes>
+      {/* <Footer/> */}
     </Router>
+   
+    
   );
 };
 

@@ -3,23 +3,31 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Modal from 'react-modal';
-import countryService from '../services/countryAPI'; // Adjust the path as necessary
+import countryService from '../services/countryAPI'; 
 
 const CountrySearch = () => {
     const [data, setData] = useState([]);
     const location = useLocation();
     const [invalidEntries, setInvalidEntries] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
-    // Get the country name from URL parameters
+/*
+=================
+Get the country name from the search bar
+=================
+*/
     const queryParams = new URLSearchParams(location.search);
     const countryName = queryParams.get('country');
 
     useEffect(() => {
+/*
+====================
+Function to fetch the fetch the population data of countryName
+====================
+*/
         const fetchPopulationData = async () => {
             if (countryName) {
-                const result = await countryService.fetchPopulationDataByCountry(countryName);
-                if (result.success) {
+                const fetchCountryNameResult = await countryService.fetchPopulationDataByCountry(countryName);
+                if (fetchCountryNameResult.success) {
                     const filteredData = result.data;
 
                     // Aggregate population data by year
@@ -31,7 +39,7 @@ const CountrySearch = () => {
                             const year = count.year;
                             const population = count.value;
 
-                            // Check if the year is a valid number and population is not null or non-numeric
+                            // Verify if year is a valid number and population not null or non-numeric
                             const parsedYear = parseInt(year, 10);
                             const parsedPopulation = parseFloat(population);
 
@@ -46,13 +54,11 @@ const CountrySearch = () => {
                             }
                         });
                     });
-
                     // Set invalid entries to state
                     if (invalidData.length > 0) {
                         setInvalidEntries(invalidData);
                         setModalIsOpen(true); // Open modal if there are invalid entries
                     }
-
                     // Convert the aggregated data into an array format for the chart
                     const formattedData = Object.keys(populationByYear).map(year => ({
                         year,

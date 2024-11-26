@@ -62,9 +62,6 @@ const CityPopulation = ({selectedCountry}) => {
         return <div>{error}</div>;
     }
 
-    // Limit to the first 20 cities
-    const limitedCities = cities.slice(0, 20);
-
     return (
         <div className="App">
             <h1>{selectedCountry} Population Chart</h1>

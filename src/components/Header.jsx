@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
+import logo from '../assets/elanco.jpg'; 
 const Header = () => {
   return (
     <header className="header">
-      <div className="logo">GeoInfo</div>
+      <div className="logo">
+      <img src={logo} alt="GeoInfo Elanco" />
+      </div>
       <nav className="nav">
         <ul>
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/line-chart">Bar Chart</Link></li>
-          <li><Link to="/bar-chart">Line Chart</Link></li>
         </ul>
       </nav>
     </header>
