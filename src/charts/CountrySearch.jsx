@@ -26,8 +26,8 @@ Function to fetch the fetch the population data of countryName
 */
         const fetchPopulationData = async () => {
             if (countryName) {
-                const fetchCountryNameResult = await countryService.fetchPopulationDataByCountry(countryName);
-                if (fetchCountryNameResult.success) {
+                const result = await countryService.fetchPopulationDataByCountry(countryName);
+                if (result.success) {
                     const filteredData = result.data;
 
                     // Aggregate population data by year

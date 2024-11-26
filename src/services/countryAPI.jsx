@@ -57,11 +57,11 @@ Function to fetch population data
 */
   async fetchPopulationData() {
     try {
-      const populationResponse = await apiClient.get('/countries/population/cities'); 
-      if (populationResponse.error === "false") {
-        return { success: true, data: populationResponse.data };
+      const response = await apiClient.get('/countries/population/cities'); 
+      if (response.error === "false") {
+        return { success: true, data: response.data };
       } else {
-        return { success: false, error: populationResponse.msg };
+        return { success: false, error: response.msg };
       }
     } catch (error) {
       return { 
@@ -77,18 +77,18 @@ Function to fetch by country name
 */
   async fetchPopulationDataByCountry(countryName) {
     try {
-      const populationByCountryResponse = await apiClient.get('/countries/population/cities');
-      if (populationByCountryResponse.error === false) {
+      const response = await apiClient.get('/countries/population/cities');
+      if (response.error === false) {
         
         /*
         =====
         Filter data for selected country
         =====
         */
-        const filteredData = respopopulationByCountryResponsense.data.filter(city => city.country === countryName);
+        const filteredData = response.data.filter(city => city.country === countryName);
         return { success: true, data: filteredData };
       } else {
-        return { success: false, error: populationByCountryResponse.msg };
+        return { success: false, error: response.msg };
       }
     } catch (error) {
       return { success: false, error: error.message || "Failed to fetch population data" };
