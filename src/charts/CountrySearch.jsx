@@ -38,9 +38,9 @@ const CountrySearch = () => {
                                 if (!populationByYear[parsedYear]) {
                                     populationByYear[parsedYear] = 0;
                                 }
-                                populationByYear[parsedYear] += parsedPopulation; // Sum populations for the same year
+                                populationByYear[parsedYear] += parsedPopulation;
                             } else {
-                                // Store invalid entries
+                                
                                 invalidData.push({ year, population });
                             }
                         });
@@ -49,7 +49,7 @@ const CountrySearch = () => {
                     // Set invalid entries to state
                     if (invalidData.length > 0) {
                         setInvalidEntries(invalidData);
-                        setModalIsOpen(true); // Open modal if there are invalid entries
+                        setModalIsOpen(true); 
                     }
 
                     // Convert the aggregated data into an array format for the chart

@@ -42,7 +42,7 @@ const UsePopulationComparison = () => {
                 setCitiesA(citiesFromCountry.data);
             } else {
                 console.error('Error fetching cities for Country A:', citiesFromCountry.error);
-                setCitiesA([]); // Reset citiesA to an empty array on error
+                setCitiesA([]); 
             }
         } else {
             setSelectedCountryB(countryName);
@@ -51,10 +51,10 @@ const UsePopulationComparison = () => {
                 setCitiesB(citiesFromCountry.data);
             } else {
                 console.error('Error fetching cities for Country B:', citiesFromCountry.error);
-                setCitiesB([]); // Reset citiesB to an empty array on error
+                setCitiesB([]); 
             }
         }
-        setIsCityModalOpen(true); // Open the modal to select cities
+        setIsCityModalOpen(true); 
     };
 
     // Handle the selection of a city from the modal
@@ -64,7 +64,7 @@ const UsePopulationComparison = () => {
         } else {
             setSelectedCityB(cityName);
         }
-        setIsCityModalOpen(false); // Close the modal after selection
+        setIsCityModalOpen(false); 
     };
 
     // Fetch population data for the selected cities when they change
@@ -91,9 +91,9 @@ const UsePopulationComparison = () => {
             city.populationCounts.forEach(count => {
                 const existingYearData = chartData.find(data => data.year === count.year) || { year: count.year, populationA: 0, populationB: 0 };
                 if (city.city === selectedCityA) {
-                    existingYearData.populationA = count.value; // Assign value for City A
+                    existingYearData.populationA = count.value; 
                 } else if (city.city === selectedCityB) {
-                    existingYearData.populationB = count.value; // Assign value for City B
+                    existingYearData.populationB = count.value; 
                 }
                 // Update or add the year data
                 if (!chartData.includes(existingYearData)) {
