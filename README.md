@@ -38,6 +38,7 @@ npm install react-modal@^3.16.1
 
    ```bash
    git clone https://github.com/thein3rovert/GeoInfo-Web.git
+   
    cd GeoInfo-Web
    ```
 
@@ -103,13 +104,13 @@ To set up the frontend locally, follow these steps:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/elanco-geoinfo-frontend.git
+   git clone https://github.com/thein3rovert/GeoInfo-web.git
    ```
 
 2. **Navigate to the project directory:**
 
    ```bash
-   cd elanco-geoinfo-frontend
+   cd GeoInfo-web
    ```
 
 3. **Install dependencies:**
@@ -186,3 +187,8 @@ charts/
 
 - **Bar Chart**: Compares the populations of two countries.
 - **Line Chart**: Displays the population of a selected country over time.
+
+### Contact
+For any inquiries or feedback, please contact:
+
+Samad Olaibi - danielolaibi@gmail.com
